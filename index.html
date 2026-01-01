@@ -20,8 +20,8 @@
         .title {color: #fff;text-align: center;margin-bottom: 30px;}
         .title h1 {font-size: 40px;text-shadow: 0 0 20px #ff2e63, 0 0 40px #ff2e63;}
         .title p {font-size: 16px;color: #a8dadc;margin-top: 8px;}
-        /* 名字编辑区 */
-        .name-edit {display: flex;align-items: center;gap: 15px;margin-bottom: 40px;background: rgba(255,255,255,0.1);padding: 15px 25px;border-radius: 50px;border: 2px solid #4cc9f0;backdrop-filter: blur(10px);}
+        /* 名字编辑区 ✅ 移除蓝框：border改为none */
+        .name-edit {display: flex;align-items: center;gap: 15px;margin-bottom: 40px;background: rgba(255,255,255,0.1);padding: 15px 25px;border-radius: 50px;backdrop-filter: blur(10px);}
         .name-edit label {color: #fff;font-size: 18px;font-weight: bold;}
         #target-name {
             width: 220px;
@@ -35,7 +35,7 @@
             text-align: center;
         }
         #target-name::placeholder {color: #999;}
-        /* 核心互动区 */
+        /* 核心互动区 ✅ 移除蓝框：border改为none */
         .main-box {
             position: relative;
             width: 100%;
@@ -43,7 +43,6 @@
             height: 400px;
             background: rgba(255,255,255,0.05);
             border-radius: 20px;
-            border: 2px solid #4cc9f0;
             backdrop-filter: blur(15px);
             display: flex;
             align-items: center;
@@ -60,9 +59,9 @@
             justify-content: center;
             transition: all 0.2s ease;
             z-index: 10;
-            cursor: pointer; /* 鼠标悬浮变手型，提示可点击 */
+            cursor: pointer;
         }
-        /* 人物头像 ✅ 重点：放大点击区域+悬停发光+点击反馈 */
+        /* 人物头像 */
         .target-avatar {
             width: 150px;
             height: 150px;
@@ -76,11 +75,10 @@
             border: 4px solid #fff;
             box-shadow: 0 0 30px #ff2e63, 0 0 60px #ff2e63;
             margin-bottom: 20px;
-            transition: all 0.1s ease; /* 点击缩放反馈 */
+            transition: all 0.1s ease;
         }
-        /* 头像悬停+点击特效 */
         .target-avatar:hover {transform: scale(1.05);box-shadow: 0 0 40px #ff2e63, 0 0 80px #ff2e63;}
-        .target-avatar:active {transform: scale(0.95);} /* 点击瞬间缩小，反馈超强 */
+        .target-avatar:active {transform: scale(0.95);}
         /* 目标名字显示 */
         .target-name-text {
             font-size: 28px;
@@ -105,7 +103,7 @@
         #reset-btn:hover {transform: scale(1.05);box-shadow: 0 0 30px #4cc9f0, 0 0 60px #4cc9f0;}
         /* 分数显示 */
         .score-box {position: absolute;top: 20px;right: 20px;color: #fff;font-size: 22px;font-weight: bold;text-shadow: 0 0 10px #ffd166;}
-        /* 动画样式 - 震动 ✅ 优化：更快更紧凑，适配连续点击 */
+        /* 震动动画 */
         @keyframes shake {
             0% {transform: translate(0,0) rotate(0deg);}
             20% {transform: translate(-3px,3px) rotate(-1deg);}
@@ -114,16 +112,16 @@
             80% {transform: translate(3px,3px) rotate(1deg);}
             100% {transform: translate(0,0) rotate(0deg);}
         }
-        .animate-shake {animation: shake 0.05s linear 5;} /* 震动更快，连续点击无断层 */
-        /* 动画样式 - 击飞+快速复位 ✅ 核心：缩短动画时间，支持无限连点 */
+        .animate-shake {animation: shake 0.05s linear 5;}
+        /* 击飞动画 */
         @keyframes fly-boom {
             0% {transform: scale(1) translate(0,0);opacity: 1;}
             30% {transform: scale(1.1) translate(-15px,-40px) rotate(8deg);opacity: 1;}
             70% {transform: scale(0.95) translate(-25px,-60px) rotate(15deg);opacity: 0.8;}
-            100% {transform: scale(1) translate(0,0);opacity: 1;} /* ✅ 关键：动画结束自动复位，无需等待，直接连点 */
+            100% {transform: scale(1) translate(0,0);opacity: 1;}
         }
-        .animate-fly {animation: fly-boom 0.4s ease forwards;} /* 动画时长缩短，适配高频点击 */
-        /* 爆炸碎片动画 */
+        .animate-fly {animation: fly-boom 0.4s ease forwards;}
+        /* 爆炸碎片 */
         .boom-piece {
             position: absolute;
             width: 20px;
@@ -138,7 +136,7 @@
             0% {opacity: 1;transform: scale(1) translate(0,0);}
             100% {opacity: 0;transform: scale(0.5) translate(var(--x), var(--y));}
         }
-        /* 暴击文字动画 ✅ 更快更醒目 */
+        /* 暴击文字 */
         .hit-text {
             position: absolute;
             font-size: 35px;
@@ -153,7 +151,7 @@
             50% {opacity: 1;transform: scale(1.3) translate(0,-15px);}
             100% {opacity: 0;transform: scale(0.9) translate(0,-30px);}
         }
-        /* 响应式适配手机 */
+        /* 响应式适配 */
         @media (max-width: 768px) {
             .title h1 {font-size: 30px;}
             .title p {font-size: 14px;}
@@ -177,21 +175,21 @@
     <!-- 名字编辑区 -->
     <div class="name-edit">
         <label>目标名字：</label>
-        <input type="text" id="target-name" placeholder="请输入要打爆的名字" value="张三">
+        <input type="text" id="target-name" placeholder="请输入要打爆的名字" value="猪八戒">
     </div>
 
     <!-- 核心互动区 -->
     <div class="main-box">
         <!-- 分数显示 -->
-        <div class="score-box">暴击分数：<span id="score">0</span></div>
-        <!-- 目标人物 ✅ 核心：头像可点击，支持无限连点 -->
+        <div class="score-box">暴击分数：<span id="score">1995</span></div>
+        <!-- 目标人物 -->
         <div class="target-box" id="target-box">
             <div class="target-avatar" id="target-avatar">👤</div>
-            <div class="target-name-text" id="show-name">张三</div>
+            <div class="target-name-text" id="show-name">猪八戒</div>
         </div>
     </div>
 
-    <!-- 按钮区（仅保留重置按钮） -->
+    <!-- 按钮区 -->
     <div class="btn-group">
         <button class="btn" id="reset-btn">重置分数 ↺</button>
     </div>
@@ -205,16 +203,16 @@
         const resetBtn = document.getElementById('reset-btn');
         const scoreDom = document.getElementById('score');
         const mainBox = document.querySelector('.main-box');
-        let score = 0;
+        let score = 1995;
 
         // ========== 初始化 ==========
         window.onload = function() {
-            bindNameChange();  // 名字实时同步
-            bindAvatarClick(); // ✅ 核心：绑定头像点击暴击（无限速）
-            bindResetEvent();  // 重置功能
+            bindNameChange();
+            bindAvatarClick();
+            bindResetEvent();
         };
 
-        // ========== 1. 名字实时编辑 - 输入即同步 ==========
+        // ========== 1. 名字实时编辑 ==========
         function bindNameChange() {
             targetNameInput.addEventListener('input', function() {
                 const name = this.value.trim() || '无名氏';
@@ -228,56 +226,47 @@
             });
         }
 
-        // ========== 2. ✅ 核心功能：点击头像无限暴击（无速度限制） ==========
+        // ========== 2. 头像点击暴击 ==========
         function bindAvatarClick() {
-            // 头像点击触发暴击，支持疯狂连续点击
             targetAvatar.addEventListener('click', function() {
-                // 1. 获取当前名字（为空则显示无名氏）
                 const currentName = targetNameInput.value.trim() || '无名氏';
                 showNameDom.innerText = currentName;
 
-                // 2. 立即触发震动动画（每点一次都震，连点超爽）
                 targetBox.classList.remove('animate-shake');
-                // 强制刷新动画，实现无限连震
                 void targetBox.offsetWidth;
                 targetBox.classList.add('animate-shake');
 
-                // 3. 触发击飞动画（无缝衔接，连点无卡顿）
                 targetBox.classList.remove('animate-fly');
                 void targetBox.offsetWidth;
                 targetBox.classList.add('animate-fly');
 
-                // 4. 随机加分（10-100分，点越快总分越高）
                 const randomScore = Math.floor(Math.random() * 90) + 10;
                 score += randomScore;
                 scoreDom.innerText = score;
 
-                // 5. 生成暴击文字+爆炸碎片（每点一次都有特效）
                 createHitText(randomScore);
                 createBoomEffect();
             });
         }
 
-        // ========== 3. 重置功能 - 分数清零+恢复初始状态 ==========
+        // ========== 3. 重置功能 ==========
         function bindResetEvent() {
             resetBtn.addEventListener('click', function() {
                 score = 0;
                 scoreDom.innerText = 0;
-                targetNameInput.value = '张三';
-                showNameDom.innerText = '张三';
-                clearAllEffect(); // 清除残留特效
+                targetNameInput.value = '猪八戒';
+                showNameDom.innerText = '猪八戒';
+                clearAllEffect();
             });
         }
 
-        // ========== 特效生成（每点击一次都触发，适配连点） ==========
-        // ✅ 暴击文字（随机位置+文案）
+        // ========== 特效生成 ==========
         function createHitText(score) {
             const hitTextList = [`+${score}`, '暴击！💥', '秒杀！🔥', '干碎TA！⚡', '痛击！💀'];
             const randomText = hitTextList[Math.floor(Math.random() * hitTextList.length)];
             const hitText = document.createElement('div');
             hitText.className = 'hit-text';
             hitText.innerText = randomText;
-            // 随机位置（头像周围，不重叠）
             hitText.style.left = `${Math.random() * 300 + 150}px`;
             hitText.style.top = `${Math.random() * 150 + 100}px`;
             hitText.style.animation = 'hit-text-animate 0.8s ease forwards';
@@ -285,7 +274,6 @@
             setTimeout(() => hitText.remove(), 800);
         }
 
-        // ✅ 爆炸碎片（每次点击生成15个，连点特效拉满）
         function createBoomEffect() {
             const pieceNum = 15;
             for (let i = 0; i < pieceNum; i++) {
@@ -304,7 +292,6 @@
             }
         }
 
-        // ✅ 清除残留特效，保证连点流畅
         function clearAllEffect() {
             document.querySelectorAll('.boom-piece').forEach(p => p.remove());
             document.querySelectorAll('.hit-text').forEach(t => t.remove());
