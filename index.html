@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>打爆TA | 无蓝框纯图形暴击✨</title>
+    <title>打爆TA | 释放压力搞笑整蛊✨</title>
     <style>
         /* ✅ 核心1：全局禁止所有文本选中，彻底根除蓝框根源！优先级最高 */
         * {margin: 0;padding: 0;box-sizing: border-box;font-family: "Microsoft YaHei", sans-serif;user-select: none !important;-webkit-user-select: none !important;-moz-user-select: none !important;}
@@ -191,7 +191,7 @@
     <!-- 标题区 -->
     <div class="title">
         <h1>打爆TA 🔥</h1>
-        <p>✅ 点击头像无限暴击 ✅ 无蓝框超丝滑 ✅ 输入名字自定义</p>
+        <p>✅ 点击头像无限暴击  ✅ 输入名字自定义</p>
     </div>
 
     <!-- 名字编辑区 -->
@@ -207,7 +207,7 @@
         <!-- 目标人物（纯图形头像，无文字） -->
         <div class="target-box" id="target-box">
             <div class="target-avatar" id="target-avatar"></div>
-            <div class="target-name-text" id="show-name">猪八戒</div>
+            <div class="target-name-text" id="show-name">JUCY</div>
         </div>
     </div>
 
@@ -280,8 +280,8 @@
             resetBtn.addEventListener('click', function() {
                 score = 0;
                 scoreDom.innerText = 0;
-                targetNameInput.value = '猪八戒';
-                showNameDom.innerText = '猪八戒';
+                targetNameInput.value = 'JUCY';
+                showNameDom.innerText = 'JUCY';
                 clearAllEffect();
             });
         }
@@ -289,7 +289,7 @@
         // ========== ✅ 核心4：击打提示语 → 纯表情数组（彻底删掉所有文字/数字） ==========
         function createHitEmoji() {
             // 纯表情库，替代原文字提示，无选中风险、无蓝框，辨识度拉满
-            const hitEmojiList = ['💥','🔥','⚡','💀','💢','👊','✊','💨'];
+            const hitEmojiList = ['💥','错了吗？','⚡','💀','💢','👊','✊','💨'];
             const randomEmoji = hitEmojiList[Math.floor(Math.random() * hitEmojiList.length)];
             
             const hitText = document.createElement('div');
@@ -330,3 +330,4 @@
     </script>
 </body>
 </html>
+
