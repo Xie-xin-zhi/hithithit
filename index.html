@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>打爆TA | 释放压力搞笑整蛊✨</title>
     <style>
-        /* ✅ 核心1：全局禁止所有文本选中，彻底根除蓝框根源！优先级最高 */
         * {margin: 0;padding: 0;box-sizing: border-box;font-family: "Microsoft YaHei", sans-serif;user-select: none !important;-webkit-user-select: none !important;-moz-user-select: none !important;}
         body {
             background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
@@ -17,11 +16,9 @@
             padding: 20px;
             overflow: hidden;
         }
-        /* 页面标题（保留标题，已加禁止选中，无蓝框） */
         .title {color: #fff;text-align: center;margin-bottom: 30px;}
         .title h1 {font-size: 40px;text-shadow: 0 0 20px #ff2e63, 0 0 40px #ff2e63;}
         .title p {font-size: 16px;color: #a8dadc;margin-top: 8px;}
-        /* 名字编辑区 - 无蓝框+禁止选中（仅输入框可编辑） */
         .name-edit {display: flex;align-items: center;gap: 15px;margin-bottom: 40px;background: rgba(255,255,255,0.1);padding: 15px 25px;border-radius: 50px;backdrop-filter: blur(10px);}
         .name-edit label {color: #fff;font-size: 18px;font-weight: bold;}
         #target-name {
@@ -34,11 +31,9 @@
             background: rgba(255,255,255,0.9);
             color: #16213e;
             text-align: center;
-            /* 输入框单独允许编辑，不影响蓝框 */
             user-select: text !important;-webkit-user-select: text !important;
         }
         #target-name::placeholder {color: #999;}
-        /* 核心互动区 - 无蓝框 */
         .main-box {
             position: relative;
             width: 100%;
@@ -53,7 +48,6 @@
             overflow: hidden;
             margin-bottom: 30px;
         }
-        /* 目标人物容器 - 可点击+无选中 */
         .target-box {
             position: relative;
             display: flex;
@@ -64,7 +58,6 @@
             z-index: 10;
             cursor: pointer;
         }
-        /* ✅ 核心2：人物标志彻底删掉文字👤 → 替换为【纯CSS图形头像】无任何文字，绝对无蓝框！ */
         .target-avatar {
             width: 150px;
             height: 150px;
@@ -79,7 +72,6 @@
             transition: all 0.1s ease;
             position: relative;
         }
-        /* 图形头像内部装饰（纯线条，无文字）- 替代原有人物文字标志 */
         .target-avatar::before {
             content: '';
             width: 60px;
@@ -98,10 +90,8 @@
             bottom: 40px;
             opacity: 0.8;
         }
-        /* 头像悬停+点击反馈 */
         .target-avatar:hover {transform: scale(1.05);box-shadow: 0 0 40px #ff2e63, 0 0 80px #ff2e63;}
         .target-avatar:active {transform: scale(0.95);}
-        /* 目标名字显示区 - 禁止选中，无蓝框 */
         .target-name-text {
             font-size: 28px;
             color: #fff;
@@ -109,7 +99,6 @@
             text-shadow: 0 0 10px #ff2e63, 0 0 20px #ff2e63;
             text-align: center;
         }
-        /* 按钮区 - 重置按钮无蓝框 */
         .btn-group {display: flex;gap: 20px;}
         .btn {
             padding: 15px 40px;
@@ -123,9 +112,7 @@
         }
         #reset-btn {background: linear-gradient(45deg, #4361ee, #7209b7);color: #fff;}
         #reset-btn:hover {transform: scale(1.05);box-shadow: 0 0 30px #7209b7, 0 0 60px #7209b7;}
-        /* 分数显示 - 禁止选中，无蓝框 */
         .score-box {position: absolute;top: 20px;right: 20px;color: #ffd166;font-size: 22px;font-weight: bold;text-shadow: 0 0 10px #ffd166,0 0 20px #e74c3c;}
-        /* 震动动画 - 适配连点 */
         @keyframes shake {
             0% {transform: translate(0,0) rotate(0deg);}
             20% {transform: translate(-3px,3px) rotate(-1deg);}
@@ -135,7 +122,6 @@
             100% {transform: translate(0,0) rotate(0deg);}
         }
         .animate-shake {animation: shake 0.05s linear 5;}
-        /* 击飞动画 - 无缝复位，支持无限连点 */
         @keyframes fly-boom {
             0% {transform: scale(1) translate(0,0);opacity: 1;}
             30% {transform: scale(1.1) translate(-15px,-40px) rotate(8deg);opacity: 1;}
@@ -143,7 +129,6 @@
             100% {transform: scale(1) translate(0,0);opacity: 1;}
         }
         .animate-fly {animation: fly-boom 0.4s ease forwards;}
-        /* 爆炸碎片特效 - 纯图形，无文字 */
         .boom-piece {
             position: absolute;
             width: 20px;
@@ -158,10 +143,9 @@
             0% {opacity: 1;transform: scale(1) translate(0,0);}
             100% {opacity: 0;transform: scale(0.5) translate(var(--x), var(--y));}
         }
-        /* ✅ 核心3：击打提示语彻底删掉所有文字/数字 → 替换为【纯表情图形】无任何文字，绝对无蓝框！ */
         .hit-text {
             position: absolute;
-            font-size: 50px; /* 表情放大，更醒目 */
+            font-size: 50px; 
             opacity: 0;
             z-index: 20;
             text-shadow: 0 0 15px #ffd166, 0 0 30px #e74c3c;
@@ -171,7 +155,6 @@
             50% {opacity: 1;transform: scale(1.5) translate(0,-20px);}
             100% {opacity: 0;transform: scale(0.9) translate(0,-40px);}
         }
-        /* 响应式适配手机 - 全兼容无蓝框 */
         @media (max-width: 768px) {
             .title h1 {font-size: 30px;}
             .title p {font-size: 14px;}
@@ -188,36 +171,27 @@
     </style>
 </head>
 <body>
-    <!-- 标题区 -->
     <div class="title">
         <h1>打爆TA 🔥</h1>
         <p>✅ 点击头像无限暴击  ✅ 输入名字自定义</p>
     </div>
-
-    <!-- 名字编辑区 -->
     <div class="name-edit">
         <label>目标：</label>
-        <input type="text" id="target-name" placeholder="输入暴击目标名" value="猪八戒">
+        <input type="text" id="target-name" placeholder="输入暴击目标名" value="JUCY">
     </div>
 
-    <!-- 核心互动区 -->
     <div class="main-box">
-        <!-- 分数显示 -->
         <div class="score-box">💯<span id="score">1995</span></div>
-        <!-- 目标人物（纯图形头像，无文字） -->
         <div class="target-box" id="target-box">
             <div class="target-avatar" id="target-avatar"></div>
             <div class="target-name-text" id="show-name">JUCY</div>
         </div>
     </div>
-
-    <!-- 按钮区 -->
     <div class="btn-group">
         <button class="btn" id="reset-btn">重置 ↺</button>
     </div>
 
     <script>
-        // ========== 全局变量 ==========
         const targetNameInput = document.getElementById('target-name');
         const showNameDom = document.getElementById('show-name');
         const targetBox = document.getElementById('target-box');
@@ -233,8 +207,6 @@
             bindAvatarClick();
             bindResetEvent();
         };
-
-        // ========== 1. 名字实时编辑（仅输入框可编辑，显示区无蓝框） ==========
         function bindNameChange() {
             targetNameInput.addEventListener('input', function() {
                 const name = this.value.trim() || '无名氏';
@@ -248,28 +220,23 @@
             });
         }
 
-        // ========== 2. 核心：点击头像无限暴击（无蓝框+无卡顿） ==========
         function bindAvatarClick() {
             targetAvatar.addEventListener('click', function() {
                 const currentName = targetNameInput.value.trim() || '无名氏';
                 showNameDom.innerText = currentName;
 
-                // 震动动画重置+触发
                 targetBox.classList.remove('animate-shake');
                 void targetBox.offsetWidth;
                 targetBox.classList.add('animate-shake');
 
-                // 击飞动画重置+触发
                 targetBox.classList.remove('animate-fly');
                 void targetBox.offsetWidth;
                 targetBox.classList.add('animate-fly');
 
-                // 分数累加
                 const randomScore = Math.floor(Math.random() * 90) + 10;
                 score += randomScore;
                 scoreDom.innerText = score;
 
-                // 生成纯表情击打提示+爆炸碎片（无文字）
                 createHitEmoji();
                 createBoomEffect();
             });
@@ -286,16 +253,13 @@
             });
         }
 
-        // ========== ✅ 核心4：击打提示语 → 纯表情数组（彻底删掉所有文字/数字） ==========
         function createHitEmoji() {
-            // 纯表情库，替代原文字提示，无选中风险、无蓝框，辨识度拉满
             const hitEmojiList = ['💥','错了吗？','⚡','💀','💢','👊','✊','💨'];
             const randomEmoji = hitEmojiList[Math.floor(Math.random() * hitEmojiList.length)];
             
             const hitText = document.createElement('div');
             hitText.className = 'hit-text';
-            hitText.innerText = randomEmoji; // 仅显示表情，无任何文字
-            // 随机位置，不遮挡头像
+            hitText.innerText = randomEmoji; 
             hitText.style.left = `${Math.random() * 300 + 150}px`;
             hitText.style.top = `${Math.random() * 150 + 100}px`;
             hitText.style.animation = 'hit-text-animate 0.8s ease forwards';
@@ -303,7 +267,6 @@
             setTimeout(() => hitText.remove(), 800);
         }
 
-        // ========== 爆炸碎片特效（纯图形，无文字） ==========
         function createBoomEffect() {
             const pieceNum = 15;
             for (let i = 0; i < pieceNum; i++) {
@@ -330,4 +293,5 @@
     </script>
 </body>
 </html>
+
 
