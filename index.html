@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>打爆TA | 释放压力搞笑整蛊✨</title>
+    <title>打爆TA | 武器系统暴击版✨</title>
     <style>
         * {margin: 0;padding: 0;box-sizing: border-box;font-family: "Microsoft YaHei", sans-serif;user-select: none !important;-webkit-user-select: none !important;-moz-user-select: none !important;}
         body {
@@ -16,10 +16,46 @@
             padding: 20px;
             overflow: hidden;
         }
-        .title {color: #fff;text-align: center;margin-bottom: 30px;}
+        .title {color: #fff;text-align: center;margin-bottom: 20px;}
         .title h1 {font-size: 40px;text-shadow: 0 0 20px #ff2e63, 0 0 40px #ff2e63;}
-        .title p {font-size: 16px;color: #a8dadc;margin-top: 8px;}
-        .name-edit {display: flex;align-items: center;gap: 15px;margin-bottom: 40px;background: rgba(255,255,255,0.1);padding: 15px 25px;border-radius: 50px;backdrop-filter: blur(10px);}
+        .title p {font-size: 14px;color: #a8dadc;margin-top: 8px;}
+
+        .weapon-box {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: rgba(255,255,255,0.05);
+            padding: 15px 20px;
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+            margin-bottom: 25px;
+            width: 100%;
+            max-width: 700px;
+        }
+        .weapon-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 80px;
+            height: 90px;
+            border-radius: 15px;
+            background: rgba(255,255,255,0.1);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #fff;
+        }
+        .weapon-item:hover {transform: scale(1.05);background: rgba(255,255,255,0.15);}
+        .weapon-item.active {
+            background: linear-gradient(45deg, #ff2e63, #f72585);
+            box-shadow: 0 0 20px #ff2e63, 0 0 40px #ff2e63;
+        }
+        .weapon-icon {font-size: 30px;margin-bottom: 6px;}
+        .weapon-name {font-size: 12px;text-align: center;}
+
+        .name-edit {display: flex;align-items: center;gap: 15px;margin-bottom: 25px;background: rgba(255,255,255,0.1);padding: 15px 25px;border-radius: 50px;backdrop-filter: blur(10px);}
         .name-edit label {color: #fff;font-size: 18px;font-weight: bold;}
         #target-name {
             width: 220px;
@@ -34,6 +70,7 @@
             user-select: text !important;-webkit-user-select: text !important;
         }
         #target-name::placeholder {color: #999;}
+
         .main-box {
             position: relative;
             width: 100%;
@@ -46,7 +83,7 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
         .target-box {
             position: relative;
@@ -72,33 +109,16 @@
             transition: all 0.1s ease;
             position: relative;
         }
-        .target-avatar::before {
-            content: '';
-            width: 60px;
-            height: 60px;
-            border: 6px solid #fff;
-            border-radius: 50%;
-            opacity: 0.9;
-        }
-        .target-avatar::after {
-            content: '';
-            width: 25px;
-            height: 6px;
-            background: #fff;
-            border-radius: 3px;
-            position: absolute;
-            bottom: 40px;
-            opacity: 0.8;
-        }
+        .target-avatar::before {content: '';width: 60px;height: 60px;border: 6px solid #fff;border-radius: 50%;opacity: 0.9;}
+        .target-avatar::after {content: '';width: 25px;height: 6px;background: #fff;border-radius: 3px;position: absolute;bottom: 40px;opacity: 0.8;}
         .target-avatar:hover {transform: scale(1.05);box-shadow: 0 0 40px #ff2e63, 0 0 80px #ff2e63;}
         .target-avatar:active {transform: scale(0.95);}
-        .target-name-text {
-            font-size: 28px;
-            color: #fff;
-            font-weight: bold;
-            text-shadow: 0 0 10px #ff2e63, 0 0 20px #ff2e63;
-            text-align: center;
-        }
+        .target-name-text {font-size: 28px;color: #fff;font-weight: bold;text-shadow: 0 0 10px #ff2e63,0 0 20px #ff2e63;text-align: center;}
+
+        .data-box {position: absolute;top: 20px;left: 20px;right: 20px;display: flex;justify-content: space-between;color: #fff;font-size: 20px;font-weight: bold;text-shadow: 0 0 10px #ffd166;}
+        .score-box {display: flex;align-items: center;gap: 5px;}
+        .current-weapon {display: flex;align-items: center;gap: 5px;color: #ffd166;}
+
         .btn-group {display: flex;gap: 20px;}
         .btn {
             padding: 15px 40px;
@@ -112,79 +132,86 @@
         }
         #reset-btn {background: linear-gradient(45deg, #4361ee, #7209b7);color: #fff;}
         #reset-btn:hover {transform: scale(1.05);box-shadow: 0 0 30px #7209b7, 0 0 60px #7209b7;}
-        .score-box {position: absolute;top: 20px;right: 20px;color: #ffd166;font-size: 22px;font-weight: bold;text-shadow: 0 0 10px #ffd166,0 0 20px #e74c3c;}
-        @keyframes shake {
-            0% {transform: translate(0,0) rotate(0deg);}
-            20% {transform: translate(-3px,3px) rotate(-1deg);}
-            40% {transform: translate(3px,-3px) rotate(1deg);}
-            60% {transform: translate(-3px,-3px) rotate(-1deg);}
-            80% {transform: translate(3px,3px) rotate(1deg);}
-            100% {transform: translate(0,0) rotate(0deg);}
-        }
-        .animate-shake {animation: shake 0.05s linear 5;}
-        @keyframes fly-boom {
-            0% {transform: scale(1) translate(0,0);opacity: 1;}
-            30% {transform: scale(1.1) translate(-15px,-40px) rotate(8deg);opacity: 1;}
-            70% {transform: scale(0.95) translate(-25px,-60px) rotate(15deg);opacity: 0.8;}
-            100% {transform: scale(1) translate(0,0);opacity: 1;}
-        }
+        @keyframes shake-stick {0%{transform:translate(0,0);}20%{transform:translate(-2px,2px);}40%{transform:translate(2px,-2px);}60%{transform:translate(-2px,-2px);}80%{transform:translate(2px,2px);}100%{transform:translate(0,0);}}
+        @keyframes shake-knife {0%{transform:translate(0,0) rotate(-1deg);}20%{transform:translate(-3px,1px) rotate(1deg);}40%{transform:translate(3px,-1px) rotate(-1deg);}60%{transform:translate(-3px,-1px) rotate(1deg);}80%{transform:translate(3px,1px) rotate(-1deg);}100%{transform:translate(0,0);}}
+        @keyframes shake-whip {0%{transform:translate(0,0);}20%{transform:translate(-4px,0);}40%{transform:translate(4px,0);}60%{transform:translate(-4px,0);}80%{transform:translate(4px,0);}100%{transform:translate(0,0);}}
+        @keyframes shake-gun {0%{transform:translate(0,0);}20%{transform:translate(-5px,3px);}40%{transform:translate(5px,-3px);}60%{transform:translate(-5px,-3px);}80%{transform:translate(5px,3px);}100%{transform:translate(0,0);}}
+        @keyframes shake-machine {0%{transform:translate(0,0);}20%{transform:translate(-6px,2px);}40%{transform:translate(6px,-2px);}60%{transform:translate(-6px,-2px);}80%{transform:translate(6px,2px);}100%{transform:translate(0,0);}}
+        @keyframes shake-nuke {0%{transform:scale(1);}50%{transform:scale(1.08);}100%{transform:scale(1);}}
+        .animate-shake {animation-fill-mode: forwards;animation-duration: 0.1s;animation-iteration-count: 5;}
+
+        @keyframes fly-boom {0%{transform:scale(1) translate(0,0);opacity:1;}30%{transform:scale(1.1) translate(-15px,-40px) rotate(8deg);opacity:1;}70%{transform:scale(0.95) translate(-25px,-60px) rotate(15deg);opacity:0.8;}100%{transform:scale(1) translate(0,0);opacity:1;}}
         .animate-fly {animation: fly-boom 0.4s ease forwards;}
-        .boom-piece {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: linear-gradient(45deg, #ffd166, #e74c3c);
-            border-radius: 50%;
-            box-shadow: 0 0 10px #ffd166;
-            opacity: 0;
-            z-index: 5;
-        }
-        @keyframes boom {
-            0% {opacity: 1;transform: scale(1) translate(0,0);}
-            100% {opacity: 0;transform: scale(0.5) translate(var(--x), var(--y));}
-        }
-        .hit-text {
-            position: absolute;
-            font-size: 50px; 
-            opacity: 0;
-            z-index: 20;
-            text-shadow: 0 0 15px #ffd166, 0 0 30px #e74c3c;
-        }
-        @keyframes hit-text-animate {
-            0% {opacity: 1;transform: scale(1) translate(0,0);}
-            50% {opacity: 1;transform: scale(1.5) translate(0,-20px);}
-            100% {opacity: 0;transform: scale(0.9) translate(0,-40px);}
-        }
-        @media (max-width: 768px) {
-            .title h1 {font-size: 30px;}
-            .title p {font-size: 14px;}
-            .name-edit {flex-direction: column;gap: 10px;padding: 15px;border-radius: 20px;width: 100%;}
-            #target-name {width: 100%;font-size: 16px;}
-            .target-avatar {width: 120px;height: 120px;}
-            .target-avatar::before {width: 45px;height: 45px;border-width: 5px;}
-            .target-name-text {font-size: 24px;}
-            .btn-group {flex-direction: column;width: 100%;gap: 15px;}
-            .btn {width: 100%;padding: 12px 0;font-size: 18px;}
-            .score-box {font-size: 18px;top: 15px;right: 15px;}
-            .hit-text {font-size: 40px;}
+        .effect-piece {position:absolute;width:20px;height:20px;border-radius:50%;opacity:0;z-index:5;}
+        .bullet {position:absolute;width:8px;height:8px;background:#fff;border-radius:50%;box-shadow:0 0 10px #fff;opacity:0;z-index:8;}
+        .nuke-wave {position:absolute;width:0;height:0;background:rgba(255,209,102,0.3);border-radius:50%;z-index:6;opacity:0;}
+        @keyframes nuke-wave-anim {0%{width:0;height:0;opacity:0.8;}100%{width:600px;height:600px;opacity:0;}}
+        @keyframes boom {0%{opacity:1;transform:scale(1) translate(0,0);}100%{opacity:0;transform:scale(0.5) translate(var(--x),var(--y));}}
+        @keyframes bullet-fly {0%{opacity:1;transform:translate(0,0);}100%{opacity:0;transform:translate(var(--x),var(--y));}}
+
+        .hit-text {position:absolute;font-size:50px;opacity:0;z-index:20;text-shadow:0 0 15px #ffd166,0 0 30px #e74c3c;}
+        @keyframes hit-text-animate {0%{opacity:1;transform:scale(1) translate(0,0);}50%{opacity:1;transform:scale(1.5) translate(0,-20px);}100%{opacity:0;transform:scale(0.9) translate(0,-40px);}}
+        @media (max-width:768px) {
+            .title h1 {font-size:30px;}
+            .weapon-box {gap:8px;padding:12px;}
+            .weapon-item {width:70px;height:80px;}
+            .weapon-icon {font-size:25px;}
+            .name-edit {flex-direction:column;gap:10px;padding:15px;border-radius:20px;width:100%;}
+            #target-name {width:100%;font-size:16px;}
+            .target-avatar {width:120px;height:120px;}
+            .target-avatar::before {width:45px;height:45px;border-width:5px;}
+            .target-name-text {font-size:24px;}
+            .data-box {font-size:16px;top:15px;}
+            .btn-group {flex-direction:column;width:100%;gap:15px;}
+            .btn {width:100%;padding:12px 0;font-size:18px;}
+            .hit-text {font-size:40px;}
         }
     </style>
 </head>
 <body>
     <div class="title">
         <h1>打爆TA 🔥</h1>
-        <p>✅ 点击头像无限暴击  ✅ 输入名字自定义</p>
+        <p>✅ 选武器暴击 ✅ 点越快分越高</p>
     </div>
-    <div class="name-edit">
-        <label>目标：</label>
-        <input type="text" id="target-name" placeholder="输入暴击目标名" value="JUCY">
+    <div class="weapon-box">
+        <div class="weapon-item active" data-weapon="stick" data-damage-min="10" data-damage-max="20" data-shake="shake-stick" data-emoji="🪄">
+            <div class="weapon-icon">🪄</div>
+            <div class="weapon-name">棍子</div>
+        </div>
+        <div class="weapon-item" data-weapon="knife" data-damage-min="20" data-damage-max="40" data-shake="shake-knife" data-emoji="🔪">
+            <div class="weapon-icon">🔪</div>
+            <div class="weapon-name">小刀</div>
+        </div>
+        <div class="weapon-item" data-weapon="whip" data-damage-min="30" data-damage-max="50" data-shake="shake-whip" data-emoji="🪢">
+            <div class="weapon-icon">🪢</div>
+            <div class="weapon-name">鞭子</div>
+        </div>
+        <div class="weapon-item" data-weapon="98k" data-damage-min="80" data-damage-max="150" data-shake="shake-gun" data-emoji="🔫">
+            <div class="weapon-icon">🔫</div>
+            <div class="weapon-name">98K</div>
+        </div>
+        <div class="weapon-item" data-weapon="machine" data-damage-min="50" data-damage-max="100" data-shake="shake-machine" data-emoji="🔥">
+            <div class="weapon-icon">🔥</div>
+            <div class="weapon-name">加特林</div>
+        </div>
+        <div class="weapon-item" data-weapon="nuke" data-damage-min="200" data-damage-max="500" data-shake="shake-nuke" data-emoji="💣">
+            <div class="weapon-icon">💣</div>
+            <div class="weapon-name">核弹</div>
+        </div>
     </div>
 
-    <div class="main-box">
-        <div class="score-box">💯<span id="score">1995</span></div>
+    <div class="name-edit">
+        <label>目标：</label>
+        <input type="text" id="target-name" placeholder="输入暴击目标名" value="作业">
+    </div>
+
+    <div class="main-box" id="main-box">
+        <div class="data-box">
+            <div class="current-weapon">武器：<span id="now-weapon">🪄 棍子</span></div>
+            <div class="score-box">💯<span id="score">0</span></div>
+        </div>
         <div class="target-box" id="target-box">
-            <div class="target-avatar" id="target-avatar"></div>
-            <div class="target-name-text" id="show-name">JUCY</div>
+            <div class="target-avatar" id="target-avatar"></div>作业            <div class="target-name-text" id="show-name">divv
         </div>
     </div>
     <div class="btn-group">
@@ -198,100 +225,157 @@
         const targetAvatar = document.getElementById('target-avatar');
         const resetBtn = document.getElementById('reset-btn');
         const scoreDom = document.getElementById('score');
-        const mainBox = document.querySelector('.main-box');
-        let score = 1995;
-
-        // ========== 初始化 ==========
-        window.onload = function() {
-            bindNameChange();
-            bindAvatarClick();
-            bindResetEvent();
+        const mainBox = document.getElementById('main-box');
+        const weaponItems = document.querySelectorAll('.weapon-item');
+        const nowWeaponDom = document.getElementById('now-weapon');
+        let score = 0;
+        let currentWeapon = { 
+            name: '棍子', emoji: '🪄', min:10, max:20, shake:'shake-stick'
         };
+        window.onload = function() {
+            bindWeaponChange();  
+            bindNameChange();   
+            bindAvatarClick(); 
+            bindResetEvent();    
+        };
+        function bindWeaponChange() {
+            weaponItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    weaponItems.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                    currentWeapon = {
+                        name: this.dataset.weapon === '98k' ? '98K' : this.dataset.weapon === 'machine' ? '加特林' : this.dataset.weapon === 'nuke' ? '核弹' : this.dataset.weapon,
+                        emoji: this.dataset.emoji,
+                        min: parseInt(this.dataset.damageMin),
+                        max: parseInt(this.dataset.damageMax),
+                        shake: this.dataset.shake
+                    };
+                    nowWeaponDom.innerText = `${currentWeapon.emoji} ${currentWeapon.name}`;
+                });
+            });
+        }
         function bindNameChange() {
-            targetNameInput.addEventListener('input', function() {
-                const name = this.value.trim() || '无名氏';
+            targetNameInput.addEventListener('input', () => {
+                const name = targetNameInput.value.trim() || '无名氏';
                 showNameDom.innerText = name;
             });
-            targetNameInput.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter') {
-                    const name = this.value.trim() || '无名氏';
+            targetNameInput.addEventListener('keydown', (e) => {
+                if(e.key === 'Enter') {
+                    const name = targetNameInput.value.trim() || '无名氏';
                     showNameDom.innerText = name;
                 }
             });
         }
-
         function bindAvatarClick() {
             targetAvatar.addEventListener('click', function() {
                 const currentName = targetNameInput.value.trim() || '无名氏';
                 showNameDom.innerText = currentName;
-
+                const damage = Math.floor(Math.random()*(currentWeapon.max - currentWeapon.min)) + currentWeapon.min;
+                score += damage;
+                scoreDom.innerText = score;
                 targetBox.classList.remove('animate-shake');
                 void targetBox.offsetWidth;
                 targetBox.classList.add('animate-shake');
-
+                targetBox.style.animationName = currentWeapon.shake;
                 targetBox.classList.remove('animate-fly');
                 void targetBox.offsetWidth;
                 targetBox.classList.add('animate-fly');
-
-                const randomScore = Math.floor(Math.random() * 90) + 10;
-                score += randomScore;
-                scoreDom.innerText = score;
-
-                createHitEmoji();
-                createBoomEffect();
+                createWeaponEffect(damage);
             });
         }
-
-        // ========== 3. 重置功能 ==========
-        function bindResetEvent() {
-            resetBtn.addEventListener('click', function() {
-                score = 0;
-                scoreDom.innerText = 0;
-                targetNameInput.value = 'JUCY';
-                showNameDom.innerText = 'JUCY';
-                clearAllEffect();
-            });
-        }
-
-        function createHitEmoji() {
-            const hitEmojiList = ['💥','错了吗？','⚡','💀','💢','👊','✊','💨'];
-            const randomEmoji = hitEmojiList[Math.floor(Math.random() * hitEmojiList.length)];
-            
-            const hitText = document.createElement('div');
-            hitText.className = 'hit-text';
-            hitText.innerText = randomEmoji; 
-            hitText.style.left = `${Math.random() * 300 + 150}px`;
-            hitText.style.top = `${Math.random() * 150 + 100}px`;
-            hitText.style.animation = 'hit-text-animate 0.8s ease forwards';
-            mainBox.appendChild(hitText);
-            setTimeout(() => hitText.remove(), 800);
-        }
-
-        function createBoomEffect() {
-            const pieceNum = 15;
-            for (let i = 0; i < pieceNum; i++) {
-                const piece = document.createElement('div');
-                piece.className = 'boom-piece';
-                piece.style.left = '50%';
-                piece.style.top = '50%';
-                piece.style.transform = 'translate(-50%, -50%)';
-                const randomX = Math.floor(Math.random() * 300) - 150;
-                const randomY = Math.floor(Math.random() * 300) - 150;
-                piece.style.setProperty('--x', `${randomX}px`);
-                piece.style.setProperty('--y', `${randomY}px`);
-                piece.style.animation = `boom 0.6s ease ${i * 0.03}s forwards`;
-                mainBox.appendChild(piece);
-                setTimeout(() => piece.remove(), 600);
+        function createWeaponEffect(damage) {
+            clearAllEffect();
+            const { name, emoji } = currentWeapon;
+            if(name === '棍子') {
+                createPieceEffect('#ffd166', 12);
+                createHitText(`${emoji}`);
+            }
+            else if(name === '小刀') {
+                createPieceEffect('#e74c3c', 15);
+                createHitText(`${emoji}`);
+            }
+            else if(name === '鞭子') {
+                createPieceEffect('#9d4edd', 18);
+                createHitText(`${emoji}`);
+            }
+            else if(name === '98K') {
+                createPieceEffect('#fff', 20, 30);
+                createHitText(`${emoji}💥`);
+            }
+            else if(name === '加特林') {
+                createBulletEffect(30);
+                createHitText(`${emoji}🔥`);
+            }
+            else if(name === '核弹') {
+                createNukeWave();
+                createPieceEffect('#ff2e63', 50, 40);
+                createHitText('☢️', 70);
             }
         }
 
-        // ========== 清除残留特效，保证连点流畅 ==========
+        function createPieceEffect(color, num, size=20) {
+            for(let i=0;i<num;i++) {
+                const piece = document.createElement('div');
+                piece.className = 'effect-piece';
+                piece.style.background = color;
+                piece.style.width = piece.style.height = `${size}px`;
+                piece.style.left = '50%';piece.style.top = '50%';
+                piece.style.transform = 'translate(-50%,-50%)';
+                const x = Math.floor(Math.random()*400)-200, y=Math.floor(Math.random()*400)-200;
+                piece.style.setProperty('--x',`${x}px`);piece.style.setProperty('--y',`${y}px`);
+                piece.style.animation = `boom 0.8s ease ${i*0.03}s forwards`;
+                mainBox.appendChild(piece);
+                setTimeout(()=>piece.remove(),1000);
+            }
+        }
+        function createBulletEffect(num) {
+            for(let i=0;i<num;i++) {
+                const bullet = document.createElement('div');
+                bullet.className = 'bullet';
+                bullet.style.left = '50%';bullet.style.top = '50%';
+                bullet.style.transform = 'translate(-50%,-50%)';
+                const x = Math.floor(Math.random()*500)-250, y=Math.floor(Math.random()*500)-250;
+                bullet.style.setProperty('--x',`${x}px`);bullet.style.setProperty('--y',`${y}px`);
+                bullet.style.animation = `bullet-fly 0.5s ease ${i*0.02}s forwards`;
+                mainBox.appendChild(bullet);
+                setTimeout(()=>bullet.remove(),600);
+            }
+        }
+        function createNukeWave() {
+            const wave = document.createElement('div');
+            wave.className = 'nuke-wave';
+            wave.style.left = '50%';wave.style.top = '50%';
+            wave.style.transform = 'translate(-50%,-50%)';
+            wave.style.animation = 'nuke-wave-anim 1.2s ease forwards';
+            mainBox.appendChild(wave);
+            setTimeout(()=>wave.remove(),1500);
+        }
+        function createHitText(text, size=50) {
+            const hit = document.createElement('div');
+            hit.className = 'hit-text';
+            hit.innerText = text;
+            hit.style.fontSize = `${size}px`;
+            hit.style.left = `${Math.random()*300+150}px`;
+            hit.style.top = `${Math.random()*150+100}px`;
+            hit.style.animation = 'hit-text-animate 0.8s ease forwards';
+            mainBox.appendChild(hit);
+            setTimeout(()=>hit.remove(),800);
+        }
         function clearAllEffect() {
-            document.querySelectorAll('.boom-piece').forEach(p => p.remove());
-            document.querySelectorAll('.hit-text').forEach(t => t.remove());
+            document.querySelectorAll('.effect-piece,.bullet,.nuke-wave,.hit-text').forEach(el=>el.remove());
+        }
+
+        function bindResetEvent() {
+            resetBtn.addEventListener('click', () => {
+                score = 0;
+                scoreDom.innerText = 0;
+                targetNameInput.value = '作业';
+                
+                showNameDom.innerText = '作业';
+                
+                clearAllEffect();
+            });
         }
     </script>
 </body>
 </html>
-
-
